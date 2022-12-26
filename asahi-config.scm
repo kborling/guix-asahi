@@ -2,9 +2,9 @@
              (guix download)
              (guix build-system gnu))
 
-(define-public linux-asahi
+(define-public asahi-linux
   (package
-    (name "linux-asahi")
+    (name "asahi-linux")
     (version "asahi-6.1-2")
     (source (origin
               (method url-fetch)
