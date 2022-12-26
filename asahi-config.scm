@@ -1,5 +1,6 @@
 (use-modules (guix packages)
              (guix download)
+             (guix licenses)
              (guix build-system gnu))
 
 (define-public asahi-linux
@@ -13,7 +14,7 @@
                     version ".tar.gz"))
               (sha256
                 (base32
-                 "a308564a13dd89144200a1058ad34ff8e26b0822e143fbeda0b3769a5fa1c60e"))))
+                 "03n6l5grlxmkl3nznhz14846pqpq9z9ql1d1011192fx2d55c253"))))
     (license license:gpl2)
     (build-system gnu-build-system)
     (arguments
