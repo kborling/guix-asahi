@@ -2,18 +2,19 @@
              (guix download)
              (guix build-system gnu))
 
-(define-public kernel-asahi
+(define-public linux-asahi
   (package
-    (name "kernel-asahi")
+    (name "linux-asahi")
     (version "asahi-6.1-2")
     (source (origin
               (method url-fetch)
               (uri (string-append
-                    "https://github.com/AsahiLinux/linux/releases/tag/"
+                    "https://github.com/AsahiLinux/linux/archive/refs/tags/"
                     version ".tar.gz"))
               (sha256
                 (base32
-                  "a308564a13dd89144200a1058ad34ff8e26b0822e143fbeda0b3769a5fa1c60e"))))
+                 "a308564a13dd89144200a1058ad34ff8e26b0822e143fbeda0b3769a5fa1c60e"))))
+    (license license:gpl2)
     (build-system gnu-build-system)
     (arguments
       `(#:phases
