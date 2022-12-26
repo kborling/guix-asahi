@@ -15,7 +15,7 @@
               (sha256
                 (base32
                  "03n6l5grlxmkl3nznhz14846pqpq9z9ql1d1011192fx2d55c253"))))
-    (license license:gpl2)
+    (license gpl2)
     (build-system gnu-build-system)
     (arguments
       `(#:phases
