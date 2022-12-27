@@ -6,7 +6,7 @@
 
 (define-public asahi-linux
   (package
-   (inherit linux-libre)
+   (inherit linux-libre-arm64-generic)
    (name "asahi-linux")
    (version "asahi-6.1-2")
    (source (origin
