@@ -18,10 +18,6 @@
              (base32
               "03n6l5grlxmkl3nznhz14846pqpq9z9ql1d1011192fx2d55c253"))))
    (license gpl2)
-   (native-inputs
-    `(("kconfig" ,kernel-config)
-      ,@(alist-delete "kconfig"
-                      (package-native-inputs linux-libre))))
    (home-page "https://github.com/AsahiLinux/kernel")
    (synopsis "The Asahi Linux kernel")
    (description "The Asahi Linux kernel is a Linux kernel distribution based on the upstream Linux kernel, with additional patches and modifications for better support on certain devices.")))
