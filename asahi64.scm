@@ -53,23 +53,23 @@
      (operating-system-user-services installation-os)))
    (packages
     (append (list git curl nano emacs)
-            (operating-system-packages installation-os)))))))
+            (operating-system-packages installation-os)))))
 
 (define asahi64-image-type
-(image-type
-(name 'asahi64-raw)
-(constructor (lambda (os)
-               (image
-                (inherit (raw-with-offset-disk-image))
-                (operating-system os)
-                (platform aarch64-linux))))))
+  (image-type
+   (name 'asahi64-raw)
+   (constructor (lambda (os)
+                  (image
+                   (inherit (raw-with-offset-disk-image))
+                   (operating-system os)
+                   (platform aarch64-linux))))))
 
 (define asahi64-barebones-raw-image
-(image
-(inherit
- (os+platform->image asahi64-barebones-os aarch64-linux
-                     #:type asahi64-image-type))
-(name 'asahi64-barebones-raw-image)))
+  (image
+   (inherit
+    (os+platform->image asahi64-barebones-os aarch64-linux
+                        #:type asahi64-image-type))
+   (name 'asahi64-barebones-raw-image)))
 
 ;; Return the default image.
 asahi64-barebones-raw-image
