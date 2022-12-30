@@ -1,9 +1,16 @@
 # GUIX System on Apple Silicon
-Experiment to have Guix System run on Apple Silicon with the help of the Asahi Linux kernel.
+Experiment to have Guix System run on Apple Silicon hardware with the help of Asahi Linux kernel.
 
-# Current Progress
-Working on getting the kernel setup as a Guix package and building the installer for use after setting up Asahi's: 'UEFI environment only (m1n1 + U-Boot + ESP)' install option.
+# Roadmap
+- [x] Create package for Asahi Linux kernel.
+- [x] Create package that contains base OS installer.
+- [x] Add script to generate `.iso` files from installer.
+- [ ] Add necessary firmware, packages, and configurations.
+- [ ] Generate `.iso` containing Base OS + Asahi Linux kernel.
+- [ ] Install `.iso` after installing Asahi: 'UEFI environment only (m1n1 + U-Boot + ESP)'.
 
 # References
 - https://github.com/AsahiLinux/linux
-- https://github.com/SystemCrafters/guix-installer (Using build-iso.sh to build custom ISO)
+
+# Attributions
+- https://github.com/SystemCrafters/guix-installer (Using build-iso.sh script to create `.iso' files)
