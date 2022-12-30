@@ -19,7 +19,7 @@ die() {
 
 # Build the image
 printf 'Attempting to build the image...\n\n'
-image=$(guix time-machine -- system image -t iso9660 './os-install.scm') \
+image=$(guix time-machine -- system image -t iso9660 './asahi64.scm') \
     || die 'Could not create image.'
 
 release_tag=$(date +"%Y%m%d%H%M")

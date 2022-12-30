@@ -1,8 +1,9 @@
-(use-modules (guix packages)
-             (gnu packages linux)
-             (guix download)
-             (guix licenses)
-             (guix build-system gnu))
+(define-module (asahi-linux)
+  #:use-module (guix packages)
+  #:use-module (gnu packages linux)
+  #:use-module (guix download)
+  #:use-module (guix licenses)
+  #:use-module (guix build-system gnu))
 
 (define-public asahi-linux
   (package
