@@ -3,9 +3,10 @@
   #:use-module (gnu packages linux)
   #:use-module (guix download)
   #:use-module (guix licenses)
-  #:use-module (guix build-system gnu))
+  #:use-module (guix build-system gnu)
+  #:export (asahi-linux-kernel))
 
-(define-public asahi-linux
+(define-public asahi-linux-kernel
   (package
    (inherit linux-libre-arm64-generic)
    (name "asahi-linux")
