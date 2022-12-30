@@ -41,19 +41,10 @@
 (define asahi64-barebones-os
   (operating-system
    (inherit installation-os)
-   (host-name "asahi")
-   (timezone "America/New_York")
-   (locale "en_US.utf8")
-   (bootloader (bootloader-configuration
-                (bootloader u-boot-asahi64-lts-bootloader)
-                (targets '("/dev/vda"))))
-   (initrd-modules '())
+   ;; (host-name "asahi")
+   ;; (timezone "America/New_York")
+   ;; (locale "en_US.utf8")
    (kernel asahi-linux)
-   (file-systems (cons (file-system
-                        (device (file-system-label "root"))
-                        (mount-point "/")
-                        (type "ext4"))
-                       %base-file-systems))
    (services (cons*
               (service agetty-service-type
                        (agetty-configuration
