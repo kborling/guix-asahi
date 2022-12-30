@@ -6,8 +6,13 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader u-boot)
   #:use-module (gnu image)
-  #:use-module (gnu packages linux)
   #:use-module (gnu packages certs)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu packages nano)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages package-management)
   #:use-module (guix platforms arm)
   #:use-module (gnu services)
   #:use-module (gnu services base)
@@ -47,7 +52,7 @@
     (cons*
      (operating-system-user-services installation-os)))
    (packages
-    (append (list git curl nano)
+    (append (list git curl nano nss emacs)
             (operating-system-packages installation-os)))))))
 
 (define asahi64-image-type
