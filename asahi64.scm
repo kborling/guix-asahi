@@ -13,6 +13,7 @@
   #:use-module (gnu services base)
   #:use-module (gnu services networking)
   #:use-module (gnu system)
+  #:use-module (gnu system install)
   #:use-module (gnu system file-systems)
   #:use-module (gnu system image)
   #:use-module (srfi srfi-26)
@@ -41,37 +42,29 @@
 (define asahi64-barebones-os
   (operating-system
    (inherit installation-os)
-   ;; (host-name "asahi")
-   ;; (timezone "America/New_York")
-   ;; (locale "en_US.utf8")
    (kernel asahi-linux)
-   (services (cons*
-              (service agetty-service-type
-                       (agetty-configuration
-                        (extra-options '("-L")) ; no carrier detect
-                        (baud-rate "115200")
-                        (term "vt100")
-                        (tty "ttyS0")))
-              (service dhcp-client-service-type)
-              (service ntp-service-type)
-              %base-services))
-   (packages (cons nss-certs %base-packages))))
+   (services
+    (cons*
+     (operating-system-user-services installation-os)))
+   (packages
+    (append (list git curl nano)
+            (operating-system-packages installation-os)))))))
 
 (define asahi64-image-type
-  (image-type
-   (name 'asahi64-raw)
-   (constructor (lambda (os)
-                  (image
-                   (inherit (raw-with-offset-disk-image))
-                   (operating-system os)
-                   (platform aarch64-linux))))))
+(image-type
+(name 'asahi64-raw)
+(constructor (lambda (os)
+               (image
+                (inherit (raw-with-offset-disk-image))
+                (operating-system os)
+                (platform aarch64-linux))))))
 
 (define asahi64-barebones-raw-image
-  (image
-   (inherit
-    (os+platform->image asahi64-barebones-os aarch64-linux
-                        #:type asahi64-image-type))
-   (name 'asahi64-barebones-raw-image)))
+(image
+(inherit
+ (os+platform->image asahi64-barebones-os aarch64-linux
+                     #:type asahi64-image-type))
+(name 'asahi64-barebones-raw-image)))
 
 ;; Return the default image.
 asahi64-barebones-raw-image
