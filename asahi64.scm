@@ -52,7 +52,7 @@
     (cons*
      (operating-system-user-services installation-os)))
    (packages
-    (append (list git curl nano nss emacs)
+    (append (list git curl nano emacs)
             (operating-system-packages installation-os)))))))
 
 (define asahi64-image-type
