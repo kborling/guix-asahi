@@ -26,7 +26,9 @@
   #:use-module (srfi srfi-26)
   #:export (asahi64-barebones-os
             asahi64-image-type
-            asahi64-barebones-raw-image))
+            asahi64-barebones-raw-image
+            u-boot-asahi
+            u-boot-asahi-bootloader))
 
 (define-public asahi-linux
   (package
@@ -46,45 +48,28 @@
    (synopsis "The Asahi Linux kernel")
    (description "The Asahi Linux kernel is a Linux kernel distribution based on the upstream Linux kernel, with additional patches and modifications for better support on certain devices.")))
 
-;; (define-public u-boot-asahi64
-;;   (make-u-boot-package "asahi64" "aarch64-linux"))
-
 (define-public u-boot-asahi
-  (let ((base (make-u-boot-package "asahi64" "aarch64-linux-gnu")))
+  (let ((base (make-u-boot-package "Asahi_Linux"
+                                   "aarch64-linux"
+                                   #:append-description "This version is for
+Asahi Linux.")))
     (package
-     (inherit base)
-     (name "u-boot-asahi")
-     (version "asahi-v2022.10-1")
-     (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/AsahiLinux/u-boot/archive/refs/tags/"
-                                  version ".tar.gz"))
-              (sha256 (base32
-                       "02x90h89p1kv3d29mdhq22a88m68w4m1cwb45gj0rr85i2z8mqjq"))))
-     (license gpl2)
-     (build-system gnu-build-system)
-     (arguments
-      `(#:make-flags (list (string-append "CROSS_COMPILE="
-                                          (assoc-ref %build-inputs "gcc")
-                                          "/bin/aarch64-linux-gnu-"))
-                     #:phases
-                     (modify-phases %standard-phases
-                                    (delete 'configure)
-                                    (add-before 'build 'unpack-sources
-                                                (lambda _
-                                                  (chdir "u-boot-" version)
-                                                  (system* "./bootstrap")))
-                                    (add-before 'build 'patch-sources
-                                                (lambda _
-                                                  (substitute* "include/configs/asahi.h"
-                                                               (("#define CONFIG_SYS_MMC_ENV_DEV 0")
-                                                                "#define CONFIG_SYS_MMC_ENV_DEV 1")))))))
-     (inputs
-      `(("gcc" ,gcc-aarch64-linux-gnu)
-        ("ncurses" ,ncurses)))
-     (home-page "https://www.denx.de/wiki/U-Boot")
-     (synopsis "Bootloader for Asahi Linux")
-     (description "u-boot is a bootloader for embedded systems. This package is a custom version of u-boot specifically built for Asahi Linux."))))
+      (inherit base)
+      (version "asahi-v2022.10-1")
+      (source (origin
+                (method url-fetch)
+                (uri (string-append
+                      "https://github.com/AsahiLinux/u-boot/archive/refs/tags/"
+                      version ".tar.gz"))
+                (sha256
+                 (base32
+                  "02x90h89p1kv3d29mdhq22a88m68w4m1cwb45gj0rr85i2z8mqjq")))))))
+
+;; Bootloader definition
+(define u-boot-asahi-bootloader
+  (bootloader
+    (inherit u-boot-bootloader)
+    (package u-boot-asahi)))
 
   (define asahi64-barebones-os
     (operating-system
@@ -96,13 +81,13 @@
      (kernel asahi-linux)
      (initrd-modules '())
      ;; TODO: Add firmware
-     ;; (bootloader (bootloader-configuration
-     ;;              (bootloader grub-efi-bootloader)
-     ;;              (targets '("/boot/efi"))
-     ;;              (terminal-outputs '(console))))
      (bootloader (bootloader-configuration
-                  (bootloader u-boot-asahi)
-                  (targets '("/dev/sda"))))
+                  (bootloader u-boot-asahi-bootloader)
+                  (targets '("/boot/efi"))
+                  (terminal-outputs '(console))))
+     ;; (bootloader (bootloader-configuration
+     ;;              (bootloader u-boot-test)
+     ;;              (targets '("/dev/sda"))))
      (file-systems (cons (file-system
                           (device (file-system-label "my-root"))
                           (mount-point "/")
