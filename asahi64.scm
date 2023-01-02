@@ -86,20 +86,15 @@ Asahi Linux.")))
 
     (kernel asahi-linux)
     (initrd-modules '())
-    ;; TODO: Add firmware
     (bootloader (bootloader-configuration
                  (bootloader u-boot-asahi-bootloader)
                  (targets '("/boot/efi"))
                  (terminal-outputs '(console))))
-    ;; (bootloader (bootloader-configuration
-    ;;              (bootloader u-boot-test)
-    ;;              (targets '("/dev/sda"))))
     (file-systems (cons (file-system
                           (device (file-system-label "my-root"))
                           (mount-point "/")
                           (type "ext4"))
                         %base-file-systems))
-
     ;; (services
     ;;  (cons*
     ;;   (operating-system-user-services installation-os)))
