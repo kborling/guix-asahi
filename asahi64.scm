@@ -30,7 +30,8 @@
 
 (define-public asahi-linux
   (package
-    (inherit linux-libre-arm64-generic)
+    (inherit linux-libre-6.0)
+    ;; (inherit linux-libre-arm-generic)
     (name "asahi-linux")
     (version "asahi-6.1-2")
     (source (origin
@@ -46,36 +47,28 @@
     (synopsis "The Asahi Linux kernel")
     (description "The Asahi Linux kernel is a Linux kernel distribution based on the upstream Linux kernel, with additional patches and modifications for better support on certain devices.")))
 
-(define-public u-boot-asahi
+(define-public u-boot-m1n1
   (let ((base (make-u-boot-package "Asahi_Linux"
-                                   "aarch64-linux"
+                                   "aarch64-linux-gnu"
                                    #:append-description "This version is for
 Asahi Linux.")))
     (package
       (inherit base)
-      (version "asahi-v2022.10-1")
+      (version "v1.2.3")
       (source (origin
                 (method url-fetch)
                 (uri (string-append
-                      "https://github.com/AsahiLinux/u-boot/archive/refs/tags/"
+                      "https://github.com/AsahiLinux/m1n1/archive/refs/tags/"
                       version ".tar.gz"))
                 (sha256
                  (base32
-                  "02x90h89p1kv3d29mdhq22a88m68w4m1cwb45gj0rr85i2z8mqjq"))))
-      (build-system gnu-build-system)
-      (arguments
-       `(#:phases
-         (modify-phases %standard-phases
-           (replace 'build
-             (lambda* (#:key (make-flags '()) #:allow-other-keys)
-               (invoke "make" "apple_m1_defconfig")
-               (invoke "make" "-j$(nproc)")))))))))
+                  "12jjx7cmrpmxhb9zhfawnmqi74gka7wb67mfyi91zldmp7dzmjqr")))))))
 
 ;; Bootloader definition
 (define-public u-boot-asahi-bootloader
   (bootloader
    (inherit u-boot-bootloader)
-   (package u-boot-asahi)))
+   (package u-boot-m1n1)))
 
 (define asahi64-barebones-os
   (operating-system

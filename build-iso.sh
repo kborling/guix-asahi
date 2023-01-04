@@ -19,7 +19,7 @@ die() {
 
 # Build the image
 printf 'Attempting to build the image...\n\n'
-image=$(guix system image --system=aarch64-linux -t iso9660 './asahi64.scm') \
+image=$(guix system image -t iso9660 --target=aarch64-linux-gnu --system=aarch64-linux './asahi64.scm') \
     || die 'Could not create image.'
 
 release_tag=$(date +"%Y%m%d%H%M")
