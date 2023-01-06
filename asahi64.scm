@@ -49,9 +49,7 @@
 
 (define-public u-boot-m1n1
   (let ((base (make-u-boot-package "Asahi_Linux"
-                                   "aarch64-linux-gnu"
-                                   #:append-description "This version is for
-Asahi Linux.")))
+                                   "aarch64-linux-gnu")))
     (package
       (inherit base)
       (version "v1.2.3")
